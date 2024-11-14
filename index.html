@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deep Learning Training Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Deep Learning Training Simulator</h1>
+
+        <section id="model-selection">
+            <h2>Select Model</h2>
+            <select id="model-select">
+                <option value="cnn">Convolutional Neural Network (CNN)</option>
+                <option value="rnn">Recurrent Neural Network (RNN)</option>
+                <option value="bert">BERT (Bidirectional Encoder Representations from Transformers)</option>
+                <option value="gan">Generative Adversarial Network (GAN)</option>
+                <option value="transformer">Transformer</option>
+                <option value="resnet">ResNet (Residual Network)</option>
+            </select>
+            <div id="model-options" class="hidden">
+                <a href="#" data-model="cnn">CNN</a>
+                <a href="#" data-model="rnn">RNN</a>
+                <a href="#" data-model="bert">BERT</a>
+                <a href="#" data-model="gan">GAN</a>
+                <a href="#" data-model="transformer">Transformer</a>
+                <a href="#" data-model="resnet">ResNet</a>
+            </div>
+            <p><strong>Model Type:</strong> <span id="model-type">Convolutional Neural Network (CNN)</span></p>
+            <p><strong>Dataset:</strong> <span id="dataset">CIFAR-10</span></p>
+            <p><strong>Optimizer:</strong> <span id="optimizer">Adam</span></p>
+        </section>
+
+        <section id="hardware-options">
+            <h2>Select Hardware</h2>
+            <div class="metric">
+                <p><strong>GPU:</strong></p>
+                <select id="gpu-select">
+                    <option value="nvidia-rtx-3090">Nvidia RTX 3090</option>
+                    <option value="nvidia-rtx-4090">Nvidia RTX 4090</option>
+                    <option value="nvidia-a100">Nvidia A100</option>
+                    <option value="amd-radeon-rx-7900-xt">AMD Radeon RX 7900 XT</option>
+                    <option value="intel-arc-a770">Intel Arc A770</option>
+                </select>
+            </div>
+            <div class="metric">
+                <p><strong>CPU:</strong></p>
+                <select id="cpu-select">
+                    <option value="intel-core-i9-13900k">Intel Core i9-13900K</option>
+                    <option value="amd-ryzen-9-7950x">AMD Ryzen 9 7950X</option>
+                </select>
+            </div>
+            <div class="metric">
+                <p><strong>RAM:</strong></p>
+                <select id="memory-select">
+                    <option value="8">8 GB</option>
+                    <option value="16">16 GB</option>
+                    <option value="32">32 GB</option>
+                    <option value="64">64 GB</option>
+                </select>
+            </div>
+            <div class="metric">
+                <p><strong>Storage:</strong></p>
+                <select id="storage-select">
+                    <option value="SSD">SSD</option>
+                    <option value="HDD">HDD</option>
+                </select>
+            </div>
+        </section>
+
+        <section id="training-parameters">
+            <h2>Training Parameters</h2>
+            <div class="metric">
+                <p><strong>Epochs:</strong></p>
+                <p>
+                    <input type="range" id="epochs-slider" min="10" max="500" step="10" value="200">
+                    <span id="epochs-display">200</span>
+                </p>
+            </div>
+            <div class="metric">
+                <p><strong>Learning Rate:</strong></p>
+                <p>
+                    <input type="range" id="learning-rate-slider" class="gpu-slider" min="0.001" max="0.1" step="0.001" value="0.001">
+                    <span id="learning-rate-display">0.001</span>
+                </p>
+            </div>
+            <div class="metric">
+                <p><strong>Batch Size:</strong></p>
+                <p>
+                    <input type="range" id="batch-size-slider" class="gpu-slider" min="8" max="128" step="8" value="32">
+                    <span id="batch-size-display">32</span>
+                </p>
+            </div>
+        </section>
+
+        <section id="progress">
+            <button id="start-training">Start Training</button>
+            <div class="progress-bar-container">
+                <div id="progress-bar-inner" class="progress-bar-inner"></div>
+            </div>
+            <p id="status">Training Status: Ready to Start</p>
+        </section>
+
+        <section id="logs">
+            <h2>Training Logs</h2>
+        </section>
+
+        <div id="controls">
+            <p>
+                <label for="dark-mode-toggle">Dark Mode:</label>
+                <input type="checkbox" id="dark-mode-toggle">
+            </p>
+        </div>
+
+        <footer>
+            <p>
+                <span>© 2023</span> <a href="https://github.com/aniket-j/deep-learning-training-simulator" target="_blank"><img src="github-icon.png" alt="GitHub"></a>
+            </p>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
