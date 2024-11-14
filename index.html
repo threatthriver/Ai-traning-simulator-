@@ -18,14 +18,6 @@
                 <option value="transformer">Transformer</option>
                 <option value="resnet">ResNet (Residual Network)</option>
             </select>
-            <div id="model-options" class="hidden">
-                <a href="#" data-model="cnn">CNN</a>
-                <a href="#" data-model="rnn">RNN</a>
-                <a href="#" data-model="bert">BERT</a>
-                <a href="#" data-model="gan">GAN</a>
-                <a href="#" data-model="transformer">Transformer</a>
-                <a href="#" data-model="resnet">ResNet</a>
-            </div>
             <p><strong>Model Type:</strong> <span id="model-type">Convolutional Neural Network (CNN)</span></p>
             <p><strong>Dataset:</strong> <span id="dataset">CIFAR-10</span></p>
             <p><strong>Optimizer:</strong> <span id="optimizer">Adam</span></p>
@@ -103,6 +95,7 @@
 
         <section id="logs">
             <h2>Training Logs</h2>
+            <div id="log-content"></div>
         </section>
 
         <div id="controls">
