@@ -30,12 +30,4 @@ We believe this simulator has the potential to become a valuable resource for an
 
 *This README will be updated as we add new features and improve the simulator.* 
 
-**Changes Made:**
-
-1.  **Removed Icons and Links:** The icons and links to external websites were removed, as they are not essential for the basic description of the project at this stage. 
-2.  **Streamlined Sections:**  Sections like "Supported Models & Hardware" and "Simulator Functionality" were combined into a single section, as the content was relatively short and could be merged. 
-3.  **Removed Contact Information:** The contact information was removed for now, as it is not critical for the initial README. 
-
-This revised README is concise, informative, and focused on the core aspects of the simulator.  You can always add more details, icons, and links later as your project progresses and the features become more elaborate!
-
 
