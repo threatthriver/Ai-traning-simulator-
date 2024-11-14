@@ -1,4 +1,4 @@
-/* style.css - Dark Mode with Orange and White Text */
+/* style.css - Dark Mode with Orange and White Text - Improved Design */
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;800&display=swap');
 
@@ -30,6 +30,7 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Stronger shadow for contrast */
     border: 1px solid #444; /* Darker gray border */
     position: relative;
+    overflow: hidden; /* Add this for the button effect */
 }
 
 /* Headings */
@@ -53,11 +54,11 @@ h2 {
 }
 
 /* Section Styles */
-.hardware-settings,
-#metrics,
-.resource-usage,
-#model-info {
+section {
     margin-bottom: 20px;
+}
+
+.section-content {
     padding: 15px;
     background: #383838; /* Darker gray section background */
     border-radius: 15px;
@@ -67,22 +68,40 @@ h2 {
 
 /* Button Styles */
 .button {
-    display: inline-block;
     background: #FFA500; /* Orange button background */
     color: #fff; /* White text */
-    padding: 10px 20px;
-    border-radius: 12px;
+    padding: 15px 30px;
+    border-radius: 20px; /* Rounded corners */
     border: none;
     font-size: 1rem;
     font-weight: 600;
     text-align: center;
     transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    position: relative; /* For positioning the button */
+    overflow: hidden; /* To clip the button */
+    z-index: 1; /* To ensure the button stays on top */
+}
+
+.button:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #D48400, #FFA500); /* Gradient for the effect */
+    transform: translateX(-100%); /* Start the gradient off-screen */
+    transition: transform 0.3s ease; /* Smooth transition */
+    z-index: -1; /* To place it behind the button */
+}
+
+.button:hover:before {
+    transform: translateX(0); /* Move the gradient on hover */
 }
 
 .button:hover {
     background: #D48400; /* Darker orange on hover */
-    transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow */
 }
 
@@ -237,4 +256,81 @@ footer a:hover {
 footer img {
     height: 18px;
     vertical-align: middle;
+}
+
+/*  Additional Styling for UI elements */
+.model-selection, 
+.hardware-options, 
+.training-parameters,
+.progress, 
+.logs,
+.controls{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/*  Add some spacing and alignment to the elements */
+.metric p:first-child {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.metric p:last-child {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.metric input[type="range"] {
+    width: 100%; 
+    margin-bottom: 5px;
+}
+
+/* Style for the progress bar container */
+.progress-bar-container {
+    width: 100%;
+    height: 20px;
+    background-color: #444; /* Darker gray bar background */
+    border-radius: 10px;
+    border: 1px solid #444;
+    overflow: hidden; 
+}
+
+/* Style for the progress bar itself */
+#progress-bar-inner {
+    height: 100%;
+    background-color: #FFA500; /* Orange progress bar fill */
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* Style for the controls section */
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style for the dark mode toggle */
+#dark-mode-toggle {
+    margin-left: 10px; 
+}
+
+/* Style for the logs section */
+.logs {
+    height: 200px;
+    overflow-y: auto;
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* Style for the log entries */
+#log-content p {
+    margin-bottom: 5px;
+    color: #ddd; /* Lighter gray text */
+    font-family: monospace;
+    white-space: pre-wrap;
 }
