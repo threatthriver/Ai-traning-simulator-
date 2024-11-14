@@ -1,22 +1,16 @@
 // script.js
+
 const progressBarInner = document.getElementById('progress-bar-inner');
 const status = document.getElementById('status');
-const epochDisplay = document.getElementById('epoch');
-const totalEpochsDisplay = document.getElementById('total-epochs');
-const lossDisplay = document.getElementById('loss');
-const accuracyDisplay = document.getElementById('accuracy');
-const valLossDisplay = document.getElementById('val-loss');
-const cpuBar = document.getElementById('cpu-bar');
-const gpuBar = document.getElementById('gpu-bar');
-const memoryBar = document.getElementById('memory-bar'); 
-const gpuUsageBar = document.getElementById('gpu-usage-bar');
-const numGpusSelect = document.getElementById('num-gpus');
-const gpuPowerSlider = document.getElementById('gpu-power');
-const gpuPowerDisplay = document.getElementById('gpu-power-display');
+const epochDisplay = document.getElementById('epochs-display');
+const totalEpochsDisplay = document.getElementById('epochs-display'); // Corrected ID
+const lossDisplay = document.getElementById('loss-display'); // Added 'display'
+const accuracyDisplay = document.getElementById('accuracy-display'); // Added 'display'
+const valLossDisplay = document.getElementById('val-loss-display'); // Added 'display'
 const startTrainingButton = document.getElementById('start-training');
-const learningRateDisplay = document.getElementById('learning-rate');
-const batchSizeDisplay = document.getElementById('batch-size');
-const timeElapsedDisplay = document.getElementById('time-elapsed'); 
+const learningRateDisplay = document.getElementById('learning-rate-display'); 
+const batchSizeDisplay = document.getElementById('batch-size-display');
+const timeElapsedDisplay = document.getElementById('time-elapsed-display'); // Added 'display' 
 const darkModeToggle = document.getElementById('dark-mode-toggle');
 const body = document.body;
 const container = document.querySelector('.container');
@@ -25,7 +19,7 @@ const modelOptions = document.getElementById('model-options');
 const modelTypeDisplay = document.getElementById('model-type');
 const datasetDisplay = document.getElementById('dataset');
 const optimizerDisplay = document.getElementById('optimizer');
-const logsWindow = document.getElementById('logs');
+const logsWindow = document.getElementById('log-content'); 
 const gpuSelect = document.getElementById('gpu-select');
 const cpuSelect = document.getElementById('cpu-select'); 
 const memorySelect = document.getElementById('memory-select'); 
@@ -34,6 +28,7 @@ const learningRateSlider = document.getElementById('learning-rate-slider');
 const learningRateDisplaySpan = document.getElementById('learning-rate-display');
 const batchSizeSlider = document.getElementById('batch-size-slider');
 const batchSizeDisplaySpan = document.getElementById('batch-size-display');
+const epochsSlider = document.getElementById('epochs-slider');
 
 let epoch = 0;
 let loss = 1.0;
@@ -142,18 +137,79 @@ modelOptions.addEventListener('click', (event) => {
 
 updateModelInfo();
 
-function updateGpuPowerDisplay() {
-    gpuPowerDisplay.textContent = `${gpuPowerSlider.value}%`;
-}
+// ... (rest of your code from previous responses) ... 
 
-gpuPowerSlider.addEventListener('input', updateGpuPowerDisplay);
-updateGpuPowerDisplay();
+epochsSlider.addEventListener('input', () => {
+    totalEpochs = parseInt(epochsSlider.value);
+    totalEpochsDisplay.textContent = totalEpochs;
+});
 
 function logMessage(message) {
     const logEntry = document.createElement('p');
     logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
     logsWindow.appendChild(logEntry);
     logsWindow.scrollTop = logsWindow.scrollHeight; 
+}
+
+// Function to update the training interval based on selected hardware
+function updateTrainingInterval() {
+    const gpuMultiplier = gpuPerformance[selectedGpu];
+    const cpuMultiplier = cpuPerformance[selectedCpu];
+    const modelEpochTime = modelConfig[currentModel].baseEpochTime * (100 / parseInt(gpuPowerSlider.value)) * (1 / gpuMultiplier) * (1 / cpuMultiplier);
+    trainingProgressInterval = setInterval(updateProgress, modelEpochTime * 1000); 
+}
+
+// Learning rate slider 
+learningRateSlider.addEventListener('input', () => {
+  learningRate = parseFloat(learningRateSlider.value);
+  learningRateDisplaySpan.textContent = learningRate.toFixed(3); 
+});
+
+// Batch size slider 
+batchSizeSlider.addEventListener('input', () => {
+  batchSize = parseInt(batchSizeSlider.value);
+  batchSizeDisplaySpan.textContent = batchSize; 
+});
+
+// Initialize Hardware Options (Populate select elements)
+window.onload = function () {
+    const gpuOptions = Object.keys(gpuPerformance);
+    const cpuOptions = Object.keys(cpuPerformance);
+    const memoryOptions = [8, 16, 32, 64]; 
+    const storageOptions = ["SSD", "HDD"]; 
+
+    const gpuSelect = document.getElementById('gpu-select');
+    const cpuSelect = document.getElementById('cpu-select');
+    const memorySelect = document.getElementById('memory-select');
+    const storageSelect = document.getElementById('storage-select');
+
+    gpuOptions.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.text = option.split('-').pop(); // Get the GPU name
+        gpuSelect.add(opt);
+    });
+
+    cpuOptions.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.text = option.split('-').pop(); // Get the CPU name
+        cpuSelect.add(opt);
+    });
+
+    memoryOptions.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.text = `${option} GB`;
+        memorySelect.add(opt);
+    });
+
+    storageOptions.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.text = option;
+        storageSelect.add(opt);
+    });
 }
 
 function updateProgress() {
@@ -177,19 +233,6 @@ function updateProgress() {
     valLossDisplay.textContent = valLoss.toFixed(2);
     learningRateDisplay.textContent = learningRate;
 
-    // Calculate CPU usage
-    const cpuUsage = 30 + (Math.random() * 40); 
-    cpuBar.style.width = `${cpuUsage}%`;
-
-    // Calculate GPU usage
-    const maxGpuUsage = parseInt(gpuPowerSlider.value) * parseInt(numGpusSelect.value);
-    const gpuUsage = Math.min(maxGpuUsage, 30 + Math.random() * 50); 
-    gpuBar.style.width = `${gpuUsage}%`;
-
-    const memoryUsage = 40 + (Math.random() * 30); 
-    memoryBar.style.width = `${memoryUsage}%`; 
-
-    // Time Elapsed Calculation
     const elapsedTime = Math.round((Date.now() - startTime) / 1000); 
     const hours = Math.floor(elapsedTime / 3600);
     const minutes = Math.floor((elapsedTime % 3600) / 60);
@@ -197,13 +240,6 @@ function updateProgress() {
     const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     timeElapsedDisplay.textContent = formattedTime;
 
-    // Simulate Errors (adjust probability as needed)
-    if (Math.random() < 0.05 && epoch > 5) {
-        const errorMessage = `Epoch ${epoch}: Error: [Simulated Error Message - Adjust based on your error types]`;
-        logMessage(errorMessage);
-    }
-
-    // ... (error handling, data loading simulation, etc.) ...
 
     if (epoch >= totalEpochs) {
         status.textContent = "Training Complete!";
@@ -270,7 +306,7 @@ storageSelect.addEventListener('change', () => {
     // Add logic here to simulate storage speed impact (if applicable)
 });
 
-// Function to update training interval based on hardware
+// Function to update the training interval based on selected hardware
 function updateTrainingInterval() {
     const gpuMultiplier = gpuPerformance[selectedGpu];
     const cpuMultiplier = cpuPerformance[selectedCpu];
