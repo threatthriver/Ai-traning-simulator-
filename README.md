@@ -26,7 +26,7 @@ This project is open-source and welcomes contributions! If you're interested in 
 
 We believe this simulator has the potential to become a valuable resource for anyone interested in exploring the world of deep learning! 
 
-**[Your GitHub Repository Link]**
+**https://github.com/threatthriver/Ai-traning-simulator-**
 
 *This README will be updated as we add new features and improve the simulator.* 
 
